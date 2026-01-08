@@ -238,7 +238,7 @@ export default function Home() {
         >
           {/* Section About */}
           <div>
-            <p className="text-xs mt-1 mb-12 text-justify">
+            <p className="text-xs 3xl:text-base mt-1 mb-12 text-justify">
               Cliché Studio is a high-end photographic post-production agency
               specializing in digital and e-commerce imagery, founded in 2025 in
               Bali by Xavier Cariou and Bastien Constant.
@@ -270,8 +270,8 @@ export default function Home() {
           <div className="space-y-6 md:space-y-8">
             {/* Services */}
             <div className="flex justify-between">
-              <h2 className="text-xs">services</h2>
-              <ul className="text-xs">
+              <h2 className="text-xs 3xl:text-base">services</h2>
+              <ul className="text-xs 3xl:text-base">
                 <li>High-end Retouching</li>
                 <li>Color Grading & Finishing</li>
                 <li>Compositing</li>
@@ -282,8 +282,8 @@ export default function Home() {
 
             {/* Follow - Réseaux sociaux */}
             <div className="flex justify-between">
-              <h2 className="text-xs">follow</h2>
-              <ul className="text-xs flex gap-4">
+              <h2 className="text-xs 3xl:text-base">follow</h2>
+              <ul className="text-xs 3xl:text-base flex gap-4">
                 <li>
                   <a
                     href="https://www.instagram.com/cliche.studio_/"
@@ -309,8 +309,8 @@ export default function Home() {
 
             {/* Contact */}
             <div className="flex justify-between">
-              <h2 className="text-xs">contact</h2>
-              <p className="text-xs">
+              <h2 className="text-xs 3xl:text-base">contact</h2>
+              <p className="text-xs 3xl:text-base">
                 <a
                   href="mailto:contact@cliche-studio.com"
                   className="underline"
@@ -322,7 +322,7 @@ export default function Home() {
 
             {/* Address */}
             <div>
-              <p className="text-xs">
+              <p className="text-xs 3xl:text-base">
                 Jl. Mertanadi No.31, Kerobokan Kelod, <br /> Kec. Kuta Utara,
                 Kabupaten Badung, <br /> Bali 80361
                 <br />
