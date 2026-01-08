@@ -158,8 +158,12 @@ export default function Home() {
 
   return (
     <div
-      className="h-screen w-screen overflow-hidden relative"
-      style={{ backgroundColor: bgColor }}
+      className="h-screen w-screen md:overflow-hidden relative"
+      style={{
+        backgroundColor: bgColor,
+        height: "100vh",
+        height: "100dvh", // Dynamic viewport height pour mobile (iOS)
+      }}
     >
       {/* Bouton burger - Visible avec opacité réduite quand le menu est ouvert */}
       <button
@@ -182,10 +186,22 @@ export default function Home() {
       </button>
 
       {/* Layout principal : 2 moitiés (gauche/droite) */}
-      <div className="h-full w-full flex">
+      <div
+        className={`h-full w-full flex ${
+          isMenuOpen ? "overflow-y-auto md:overflow-hidden" : "overflow-hidden"
+        }`}
+      >
         {/* Moitié gauche - Bloc Logo */}
         {isMounted && markSrc && (
-          <div className="w-full md:w-1/2 h-full flex items-center justify-center md:justify-end">
+          <div
+            className="w-full md:w-1/2 flex items-center justify-center md:justify-end"
+            style={{
+              height: "100vh",
+              height: "100dvh", // Dynamic viewport height pour mobile (iOS)
+              minHeight: "100vh",
+              minHeight: "100dvh",
+            }}
+          >
             <div
               className={`transition-opacity duration-[1500ms] select-none ${
                 isMenuOpen ? "opacity-0 md:opacity-15" : "opacity-100"
