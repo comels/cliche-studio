@@ -247,7 +247,7 @@ export default function Home() {
         {/* Contenu du menu avec animation d'opacité */}
         <div
           ref={menuContentRef}
-          className={`h-full flex flex-col justify-between text-right p-6 py-12 md:max-w-[600px] md:pl-12 md:ml-auto overflow-y-auto menu-content transition-opacity duration-[1500ms] ${
+          className={`h-full flex flex-col justify-between text-right p-6 py-12 md:max-w-[600px] 3xl:max-w-3xl md:pl-12 md:ml-auto overflow-y-auto menu-content transition-opacity duration-[1500ms] ${
             isMenuOpen ? "opacity-100" : "opacity-0"
           }`}
           onClick={handleMenuContentClick}
