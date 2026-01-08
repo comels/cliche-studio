@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Styles globaux */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#__next {
+  height: 100%;
+  width: 100%;
+}
+
+/* Tailles responsives des logos */
+.logo-main {
+  width: clamp(200px, 30vw, 250px);
+}
+
+.logo-mark {
+  width: clamp(240px, 35vw, 320px);
+}
+
+/* Desktop : logos plus petits */
+@media (min-width: 768px) {
+  .logo-main {
+    width: clamp(120px, 14vw, 220px);
+  }
+
+  .logo-mark {
+    width: clamp(140px, 18vw, 280px);
+  }
+}
