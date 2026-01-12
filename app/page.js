@@ -267,7 +267,7 @@ export default function Home() {
                 <img
                   src={logoSrcDesktop}
                   alt="Cliché Studio Logo"
-                  className="h-auto w-[auto] object-contain select-none pointer-events-none"
+                  className="h-auto w-[80%] object-contain select-none pointer-events-none"
                   loading="eager"
                 />
               </div>
