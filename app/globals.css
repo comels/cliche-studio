@@ -19,7 +19,7 @@ body {
   width: 100%;
 }
 
-/* Tailles responsives des logos */
+/* Tailles responsives des logos - transition fluide sans saut */
 .logo-main {
   width: clamp(200px, 30vw, 250px);
 }
@@ -28,54 +28,14 @@ body {
   width: clamp(240px, 35vw, 320px);
 }
 
-/* Desktop : logos plus petits */
+/* Desktop : logos plus petits puis qui grossissent progressivement */
+/* Utilisation d'une seule valeur clamp() qui fonctionne pour toutes les tailles */
 @media (min-width: 768px) {
   .logo-main {
-    width: clamp(120px, 14vw, 220px);
+    width: clamp(120px, 14vw, 1200px);
   }
 
   .logo-mark {
-    width: clamp(140px, 18vw, 280px);
-  }
-}
-
-/* Très grands écrans : logos qui grossissent */
-@media (min-width: 1920px) {
-  .logo-main {
-    width: clamp(220px, 16vw, 400px);
-  }
-
-  .logo-mark {
-    width: clamp(280px, 20vw, 500px);
-  }
-}
-
-@media (min-width: 2560px) {
-  .logo-main {
-    width: clamp(300px, 18vw, 550px);
-  }
-
-  .logo-mark {
-    width: clamp(380px, 22vw, 680px);
-  }
-}
-
-@media (min-width: 3840px) {
-  .logo-main {
-    width: clamp(400px, 20vw, 750px);
-  }
-
-  .logo-mark {
-    width: clamp(500px, 24vw, 950px);
-  }
-}
-
-@media (min-width: 6000px) {
-  .logo-main {
-    width: clamp(600px, 22vw, 1200px);
-  }
-
-  .logo-mark {
-    width: clamp(750px, 26vw, 1500px);
+    width: clamp(140px, 18vw, 1500px);
   }
 }

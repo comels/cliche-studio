@@ -12,7 +12,7 @@ const COLORS = [
   "#E8DAEF",
 ];
 
-// Liste des marks (logos variables) disponibles
+// Liste des marks (logos variables) pour mobile
 const MARKS = [
   "/mark_1.png",
   "/mark_2.png",
@@ -23,6 +23,19 @@ const MARKS = [
   "/mark_7.png",
   "/mark_8.png",
   "/mark_9.png",
+];
+
+// Liste des logos pour desktop (dossier logo-ordi)
+const LOGOS_DESKTOP = [
+  "/logo-ordi/mark_01.png",
+  "/logo-ordi/mark_02.png",
+  "/logo-ordi/mark_03.png",
+  "/logo-ordi/mark_04.png",
+  "/logo-ordi/mark_05.png",
+  "/logo-ordi/mark_06.png",
+  "/logo-ordi/mark_07.png",
+  "/logo-ordi/mark_08.png",
+  "/logo-ordi/mark_09.png",
 ];
 
 /**
@@ -37,6 +50,7 @@ function pickRandomNoRepeat(list, storageKey) {
     return list[0];
   }
 
+  // Lire la dernière valeur AVANT toute sélection
   const lastValue = localStorage.getItem(storageKey);
 
   // Filtrer la liste pour exclure la dernière valeur (si elle existe)
@@ -52,8 +66,13 @@ function pickRandomNoRepeat(list, storageKey) {
     optionsToUse[Math.floor(Math.random() * optionsToUse.length)];
 
   // Sauvegarder IMMÉDIATEMENT la nouvelle valeur dans localStorage
-  // pour éviter les répétitions si la fonction est appelée plusieurs fois rapidement
-  localStorage.setItem(storageKey, selected);
+  // AVANT de retourner pour éviter les répétitions si la fonction est appelée plusieurs fois
+  try {
+    localStorage.setItem(storageKey, selected);
+  } catch (e) {
+    // En cas d'erreur localStorage (quota, etc.), continuer quand même
+    console.warn("localStorage error:", e);
+  }
 
   return selected;
 }
@@ -62,22 +81,30 @@ export default function Home() {
   // États - Initialisation avec valeurs par défaut pour éviter l'erreur d'hydratation
   const [bgColor, setBgColor] = useState(COLORS[0]);
   const [markSrc, setMarkSrc] = useState(null);
+  const [logoSrcDesktop, setLogoSrcDesktop] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const menuContentRef = useRef(null);
+  const initializedRef = useRef(false); // Pour éviter les doubles initialisations
 
-  // Initialisation : sélection aléatoire de la couleur de fond et du mark
+  // Initialisation : sélection aléatoire de la couleur de fond et des logos
   // Utilisation d'un useEffect pour éviter l'erreur d'hydratation SSR/CSR
   useEffect(() => {
+    // Éviter les doubles initialisations (React StrictMode en développement)
+    if (initializedRef.current) return;
+    initializedRef.current = true;
+
     setIsMounted(true);
 
     // Sélectionner les nouvelles valeurs (la fonction exclut déjà la dernière)
     const color = pickRandomNoRepeat(COLORS, "lastBgColor");
     const mark = pickRandomNoRepeat(MARKS, "lastMark");
+    const logoDesktop = pickRandomNoRepeat(LOGOS_DESKTOP, "lastLogoDesktop");
 
     setBgColor(color);
     setMarkSrc(mark);
+    setLogoSrcDesktop(logoDesktop);
   }, []);
 
   // Calculer la largeur de la scrollbar du menu pour aligner le burger avec le texte
@@ -182,7 +209,12 @@ export default function Home() {
               : "1.5rem",
         }}
       >
-        <img src="/burger.png" alt="Menu" className="w-7 h-3" />
+        <img
+          src="/burger.png"
+          alt="Open menu"
+          className="w-7 h-3"
+          loading="eager"
+        />
       </button>
 
       {/* Layout principal : 2 moitiés (gauche/droite) */}
@@ -192,9 +224,9 @@ export default function Home() {
         }`}
       >
         {/* Moitié gauche - Bloc Logo */}
-        {isMounted && markSrc && (
+        {isMounted && (markSrc || logoSrcDesktop) && (
           <div
-            className="w-full md:w-1/2 flex items-center justify-center md:justify-end"
+            className="w-full md:w-1/2 flex items-center justify-center md:items-center md:justify-end relative"
             style={{
               height: "100vh",
               height: "100dvh", // Dynamic viewport height pour mobile (iOS)
@@ -202,24 +234,44 @@ export default function Home() {
               minHeight: "100dvh",
             }}
           >
-            <div
-              className={`transition-opacity duration-[1500ms] select-none ${
-                isMenuOpen ? "opacity-0 md:opacity-15" : "opacity-100"
-              }`}
-            >
-              <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6 lg:gap-9 xl:gap-12 select-none">
+            {/* Mobile : Logo + Mark */}
+            {markSrc && (
+              <div
+                className={`flex flex-col md:hidden items-center gap-3 select-none transition-opacity duration-[1500ms] ${
+                  isMenuOpen ? "opacity-0" : "opacity-100"
+                }`}
+              >
                 <img
                   src="/logo.png"
-                  alt="Logo Cliché Studio"
+                  alt="Cliché Studio - High-end Retouching Post-Production Agency"
                   className="logo-main h-auto object-contain select-none pointer-events-none"
+                  loading="eager"
+                  fetchPriority="high"
                 />
                 <img
                   src={markSrc}
-                  alt="Mark"
+                  alt="Cliché Studio Mark"
                   className="logo-mark h-auto object-contain select-none pointer-events-none"
+                  loading="eager"
                 />
               </div>
-            </div>
+            )}
+            {/* Desktop : Logo seul du dossier logo-ordi */}
+            {logoSrcDesktop && (
+              <div
+                className={`hidden md:flex md:justify-end md:items-center select-none transition-opacity duration-[1500ms] ${
+                  isMenuOpen ? "opacity-15" : "opacity-100"
+                }`}
+                style={{ width: "fit-content" }}
+              >
+                <img
+                  src={logoSrcDesktop}
+                  alt="Cliché Studio Logo"
+                  className="h-auto w-auto object-contain select-none pointer-events-none"
+                  loading="eager"
+                />
+              </div>
+            )}
           </div>
         )}
 
@@ -247,14 +299,14 @@ export default function Home() {
         {/* Contenu du menu avec animation d'opacité */}
         <div
           ref={menuContentRef}
-          className={`h-full flex flex-col justify-between text-right p-6 py-12 md:max-w-[600px] 3xl:max-w-3xl md:pl-12 md:ml-auto overflow-y-auto menu-content transition-opacity duration-[1500ms] ${
+          className={`h-full flex flex-col justify-between text-right p-6 py-12 md:max-w-[550px] 2xl:max-w-[600px] md:pl-12 md:ml-auto overflow-y-auto menu-content transition-opacity duration-[1500ms] ${
             isMenuOpen ? "opacity-100" : "opacity-0"
           }`}
           onClick={handleMenuContentClick}
         >
           {/* Section About */}
           <div>
-            <p className="text-xs 3xl:text-base mt-1 mb-12 text-justify">
+            <p className="text-xs mt-1 mb-12 text-justify">
               Cliché Studio is a high-end photographic post-production agency
               specializing in digital and e-commerce imagery, founded in 2025 in
               Bali by Xavier Cariou and Bastien Constant.
@@ -286,8 +338,8 @@ export default function Home() {
           <div className="space-y-6 md:space-y-8">
             {/* Services */}
             <div className="flex justify-between">
-              <h2 className="text-xs 3xl:text-base">services</h2>
-              <ul className="text-xs 3xl:text-base">
+              <h2 className="text-xs">services</h2>
+              <ul className="text-xs">
                 <li>High-end Retouching</li>
                 <li>Color Grading & Finishing</li>
                 <li>Compositing</li>
@@ -298,8 +350,8 @@ export default function Home() {
 
             {/* Follow - Réseaux sociaux */}
             <div className="flex justify-between">
-              <h2 className="text-xs 3xl:text-base">follow</h2>
-              <ul className="text-xs 3xl:text-base flex gap-4">
+              <h2 className="text-xs">follow</h2>
+              <ul className="text-xs flex gap-4">
                 <li>
                   <a
                     href="https://www.instagram.com/cliche.studio_/"
@@ -325,8 +377,8 @@ export default function Home() {
 
             {/* Contact */}
             <div className="flex justify-between">
-              <h2 className="text-xs 3xl:text-base">contact</h2>
-              <p className="text-xs 3xl:text-base">
+              <h2 className="text-xs">contact</h2>
+              <p className="text-xs">
                 <a
                   href="mailto:contact@cliche-studio.com"
                   className="underline"
@@ -338,7 +390,7 @@ export default function Home() {
 
             {/* Address */}
             <div>
-              <p className="text-xs 3xl:text-base">
+              <p className="text-xs">
                 Jl. Mertanadi No.31, Kerobokan Kelod, <br /> Kec. Kuta Utara,
                 Kabupaten Badung, <br /> Bali 80361
                 <br />
