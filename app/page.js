@@ -12,17 +12,17 @@ const COLORS = [
   "#E8DAEF",
 ];
 
-// Liste des marks (logos variables) pour mobile
+// Liste des marks (logos variables) pour mobile (dossier logo-mobile)
 const MARKS = [
-  "/mark_1.png",
-  "/mark_2.png",
-  "/mark_3.png",
-  "/mark_4.png",
-  "/mark_5.png",
-  "/mark_6.png",
-  "/mark_7.png",
-  "/mark_8.png",
-  "/mark_9.png",
+  "/logo-mobile/mark_1.png",
+  "/logo-mobile/mark_2.png",
+  "/logo-mobile/mark_3.png",
+  "/logo-mobile/mark_4.png",
+  "/logo-mobile/mark_5.png",
+  "/logo-mobile/mark_6.png",
+  "/logo-mobile/mark_7.png",
+  "/logo-mobile/mark_8.png",
+  "/logo-mobile/mark_9.png",
 ];
 
 // Liste des logos pour desktop (dossier logo-ordi)
@@ -199,7 +199,7 @@ export default function Home() {
           e.stopPropagation();
           setIsMenuOpen(!isMenuOpen);
         }}
-        className={`absolute top-6 z-[60] transition-all duration-[2500ms] ${
+        className={`absolute top-6 z-[60] transition-all duration-[2000ms] ${
           isMenuOpen ? "opacity-15" : "opacity-100"
         }`}
         style={{
@@ -237,7 +237,7 @@ export default function Home() {
             {/* Mobile : Logo + Mark */}
             {markSrc && (
               <div
-                className={`flex flex-col md:hidden items-center gap-3 select-none transition-opacity duration-[2500ms] ${
+                className={`flex flex-col md:hidden items-center gap-3 select-none transition-opacity duration-[2000ms] ${
                   isMenuOpen ? "opacity-0" : "opacity-100"
                 }`}
               >
@@ -251,7 +251,7 @@ export default function Home() {
                 <img
                   src={markSrc}
                   alt="Cliché Studio Mark"
-                  className="logo-mark h-auto object-contain select-none pointer-events-none"
+                  className="h-auto w-[60%] object-contain select-none pointer-events-none"
                   loading="eager"
                 />
               </div>
@@ -259,7 +259,7 @@ export default function Home() {
             {/* Desktop : Logo seul du dossier logo-ordi */}
             {logoSrcDesktop && (
               <div
-                className={`hidden md:flex md:justify-end md:items-center select-none transition-opacity duration-[2500ms] ${
+                className={`hidden md:flex md:justify-end md:items-center select-none transition-opacity duration-[2000ms] ${
                   isMenuOpen ? "opacity-[0.08]" : "opacity-100"
                 }`}
                 style={{ width: "fit-content" }}
@@ -289,7 +289,7 @@ export default function Home() {
 
       {/* Panneau du menu - Slide depuis la droite */}
       <div
-        className={`fixed top-0 right-0 h-full z-50 transition-all duration-[2500ms] ease-in-out w-full md:w-1/2 flex ${
+        className={`fixed top-0 right-0 h-full z-50 transition-all duration-[2000ms] ease-in-out w-full md:w-1/2 flex ${
           isMenuOpen
             ? "translate-x-0 opacity-100"
             : "translate-x-full opacity-0"
@@ -299,7 +299,7 @@ export default function Home() {
         {/* Contenu du menu avec animation d'opacité */}
         <div
           ref={menuContentRef}
-          className={`h-full flex flex-col justify-between text-right p-6 py-12 md:max-w-[550px] 2xl:max-w-[600px] md:pl-12 md:ml-auto overflow-y-auto menu-content transition-opacity duration-[2500ms] ${
+          className={`h-full flex flex-col justify-between text-right p-6 py-12 md:max-w-[550px] 2xl:max-w-[600px] md:pl-12 md:ml-auto overflow-y-auto menu-content transition-opacity duration-[2000ms] ${
             isMenuOpen ? "opacity-100" : "opacity-0"
           }`}
           onClick={handleMenuContentClick}
