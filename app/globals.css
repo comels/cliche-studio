@@ -24,18 +24,9 @@ body {
   width: clamp(200px, 30vw, 250px);
 }
 
-.logo-mark {
-  width: clamp(240px, 35vw, 320px);
-}
-
-/* Desktop : logos plus petits puis qui grossissent progressivement */
-/* Utilisation d'une seule valeur clamp() qui fonctionne pour toutes les tailles */
+/* Desktop : logo principal plus petit puis qui grossit progressivement */
 @media (min-width: 768px) {
   .logo-main {
     width: clamp(120px, 14vw, 1200px);
-  }
-
-  .logo-mark {
-    width: clamp(140px, 18vw, 1500px);
   }
 }
